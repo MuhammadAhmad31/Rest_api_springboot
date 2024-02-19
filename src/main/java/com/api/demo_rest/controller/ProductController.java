@@ -22,10 +22,10 @@ public class ProductController {
     public ResponseEntity<Map<String, Object>> create(@RequestBody Product product) {
         try {
             Product savedProduct = productService.save(product);
-            return ResponseEntity.ok(ResponseHelper.createResponse("success", savedProduct, HttpStatus.OK.value() ));
+            return ResponseEntity.ok(ResponseHelper.createResponse("Data berhasil ditampilkan", savedProduct, HttpStatus.OK.value(), "success" ));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ResponseHelper.createErrorResponse("error", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
+                    .body(ResponseHelper.createErrorResponse("Data tidak dapat ditampilkan", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), "error"));
         }
     }
 
@@ -33,10 +33,10 @@ public class ProductController {
     public ResponseEntity<Map<String, Object>> findAll() {
         try {
             Iterable<Product> products = productService.findAll();
-            return ResponseEntity.ok(ResponseHelper.createResponse("success", products, HttpStatus.OK.value()));
+            return ResponseEntity.ok(ResponseHelper.createResponse("Data Ditampilkan", products, HttpStatus.OK.value(), "success"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ResponseHelper.createErrorResponse("error", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
+                    .body(ResponseHelper.createErrorResponse("Data tidak dapat ditampilkan", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), "error"));
         }
     }
 
@@ -46,14 +46,14 @@ public class ProductController {
             Product product = productService.findOne(id);
 
             if (product != null) {
-                return ResponseEntity.ok(ResponseHelper.createResponse("success", product, HttpStatus.OK.value()));
+                return ResponseEntity.ok(ResponseHelper.createResponse("Data ditampilkan", product, HttpStatus.OK.value(), "success"));
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(ResponseHelper.createErrorResponse("error", "Product not found with ID: " + id, HttpStatus.NOT_FOUND.value()));
+                        .body(ResponseHelper.createErrorResponse("Data tidak ada", "Product not found with ID: " + id, HttpStatus.NOT_FOUND.value(), "error"));
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ResponseHelper.createErrorResponse("error", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
+                    .body(ResponseHelper.createErrorResponse("Data tidak dapat ditampilkan", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), "error"));
         }
     }
 
@@ -61,10 +61,10 @@ public class ProductController {
     public ResponseEntity<Map<String, Object>> update(@RequestBody Product product) {
         try {
             Product updatedProduct = productService.save(product);
-            return ResponseEntity.ok(ResponseHelper.createResponse("success", updatedProduct, HttpStatus.OK.value()));
+            return ResponseEntity.ok(ResponseHelper.createResponse("Data berhasil di update", updatedProduct, HttpStatus.OK.value(), "success"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ResponseHelper.createErrorResponse("error", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
+                    .body(ResponseHelper.createErrorResponse("Data tidak dapat di update", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), "error"));
         }
     }
 
@@ -75,14 +75,14 @@ public class ProductController {
 
             if (product != null) {
                 productService.removeOne(id);
-                return ResponseEntity.ok(ResponseHelper.createResponse("success", null, HttpStatus.OK.value()));
+                return ResponseEntity.ok(ResponseHelper.createResponse("Data berhasil di hapus", null, HttpStatus.OK.value(), "success"));
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(ResponseHelper.createErrorResponse("error", "Product not found with ID: " + id, HttpStatus.NOT_FOUND.value()));
+                        .body(ResponseHelper.createErrorResponse("Data tidak ada", "Product not found with ID: " + id, HttpStatus.NOT_FOUND.value(), "error"));
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ResponseHelper.createErrorResponse("error", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
+                    .body(ResponseHelper.createErrorResponse("Data tidak dapat dihapus", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), "error"));
         }
     }
 }
