@@ -22,10 +22,10 @@ public class ProductController {
     public ResponseEntity<Map<String, Object>> create(@RequestBody Product product) {
         try {
             Product savedProduct = productService.save(product);
-            return ResponseEntity.ok(ResponseHelper.createResponse("success", savedProduct));
+            return ResponseEntity.ok(ResponseHelper.createResponse("success", savedProduct, HttpStatus.OK.value() ));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ResponseHelper.createErrorResponse("error", e.getMessage()));
+                    .body(ResponseHelper.createErrorResponse("error", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
         }
     }
 
@@ -33,10 +33,10 @@ public class ProductController {
     public ResponseEntity<Map<String, Object>> findAll() {
         try {
             Iterable<Product> products = productService.findAll();
-            return ResponseEntity.ok(ResponseHelper.createResponse("success", products));
+            return ResponseEntity.ok(ResponseHelper.createResponse("success", products, HttpStatus.OK.value()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ResponseHelper.createErrorResponse("error", e.getMessage()));
+                    .body(ResponseHelper.createErrorResponse("error", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
         }
     }
 
@@ -46,14 +46,14 @@ public class ProductController {
             Product product = productService.findOne(id);
 
             if (product != null) {
-                return ResponseEntity.ok(ResponseHelper.createResponse("success", product));
+                return ResponseEntity.ok(ResponseHelper.createResponse("success", product, HttpStatus.OK.value()));
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(ResponseHelper.createErrorResponse("error", "Product not found with ID: " + id));
+                        .body(ResponseHelper.createErrorResponse("error", "Product not found with ID: " + id, HttpStatus.NOT_FOUND.value()));
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ResponseHelper.createErrorResponse("error", e.getMessage()));
+                    .body(ResponseHelper.createErrorResponse("error", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
         }
     }
 
@@ -61,10 +61,10 @@ public class ProductController {
     public ResponseEntity<Map<String, Object>> update(@RequestBody Product product) {
         try {
             Product updatedProduct = productService.save(product);
-            return ResponseEntity.ok(ResponseHelper.createResponse("success", updatedProduct));
+            return ResponseEntity.ok(ResponseHelper.createResponse("success", updatedProduct, HttpStatus.OK.value()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ResponseHelper.createErrorResponse("error", e.getMessage()));
+                    .body(ResponseHelper.createErrorResponse("error", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
         }
     }
 
@@ -75,14 +75,14 @@ public class ProductController {
 
             if (product != null) {
                 productService.removeOne(id);
-                return ResponseEntity.ok(ResponseHelper.createResponse("success", null));
+                return ResponseEntity.ok(ResponseHelper.createResponse("success", null, HttpStatus.OK.value()));
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(ResponseHelper.createErrorResponse("error", "Product not found with ID: " + id));
+                        .body(ResponseHelper.createErrorResponse("error", "Product not found with ID: " + id, HttpStatus.NOT_FOUND.value()));
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ResponseHelper.createErrorResponse("error", e.getMessage()));
+                    .body(ResponseHelper.createErrorResponse("error", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
         }
     }
 }
