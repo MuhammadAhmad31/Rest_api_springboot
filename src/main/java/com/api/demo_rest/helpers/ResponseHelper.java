@@ -3,8 +3,11 @@ package com.api.demo_rest.helpers;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.Errors;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ResponseHelper {
     public static Map<String, Object> createResponse(String message, Object data, Integer code, String status) {
@@ -25,15 +28,17 @@ public class ResponseHelper {
         return response;
     }
 
-    public static Map<String, String> getErrors(Errors errors) {
-        Map<String, String> errorMap = new HashMap<>();
+    public static List<String> getErrors(Errors errors) {
+        List<String> errorList = new ArrayList<>();
+
         errors.getAllErrors().forEach(error -> {
-            String fieldName = error.getObjectName();
             String errorMessage = error.getDefaultMessage();
-            errorMap.put(fieldName, errorMessage);
+            errorList.add(errorMessage);
         });
-        return errorMap;
+
+        return errorList;
     }
+
 
     public static Map<String, Object> ValidationErrorResponse(Errors errors) {
         Map<String, Object> errorResponse = new HashMap<>();
