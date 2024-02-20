@@ -1,6 +1,7 @@
 package com.api.demo_rest.models.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Product")
@@ -10,10 +11,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
+    //    contoh untuk buat column
+    @NotEmpty(message = "Name is required")
     @Column(name = "name", length = 100, unique = false)
-//    contoh untuk buat column
     private String name;
 
+    @NotEmpty(message = "Description is required")
     @Column(length = 500)
     private String description;
 
