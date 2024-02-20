@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -25,7 +24,7 @@ public class ProductController {
     public ResponseEntity<Map<String, Object>> createProduct(@Valid @RequestBody Product product, Errors errors) {
         try {
             if (errors.hasErrors()) {
-                return ResponseEntity.badRequest().body(ResponseHelper.ValidationErrorResponse(errors));
+                return ResponseEntity.badRequest().body(ResponseHelper.createValidationErrorResponse(errors));
             }
             Product savedProduct = productService.save(product);
             return ResponseEntity.ok(ResponseHelper.createResponse("Data berhasil ditambahkan", savedProduct, HttpStatus.OK.value(), "success"));
