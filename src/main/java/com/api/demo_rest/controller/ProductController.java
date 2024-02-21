@@ -63,8 +63,11 @@ public class ProductController {
     }
 
     @PutMapping
-    public ResponseEntity<Map<String, Object>> update(@RequestBody Product product) {
+    public ResponseEntity<Map<String, Object>> update(@Valid @RequestBody Product product, Errors errors) {
         try {
+            if (errors.hasErrors()) {
+                return ResponseEntity.badRequest().body(ResponseHelper.createValidationErrorResponse(errors));
+            }
             Product updatedProduct = productService.save(product);
             return ResponseEntity.ok(ResponseHelper.createResponse("Data berhasil di update", updatedProduct, HttpStatus.OK.value(), "success"));
         } catch (Exception e) {
